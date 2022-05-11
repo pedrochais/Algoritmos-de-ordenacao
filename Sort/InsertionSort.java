@@ -3,7 +3,7 @@ package Sort;
 import Generic.Generic;
 
 public class InsertionSort {
-    public static void insertionSort (Generic<?,?> []vetor, int tamanho) {
+    public static void ordenar(Generic<?,?> []vetor, int tamanho) {
         int i, j;
         Generic<?,?> key;
         for(j = 1; j < tamanho; j++){

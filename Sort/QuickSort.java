@@ -4,12 +4,12 @@ import Generic.Generic;
 
 public class QuickSort {
 
-    public static void quickSort(Generic<?,?>[] vetor, int inicio, int fim){
+    public static void ordenar(Generic<?,?>[] vetor, int inicio, int fim){
         if(inicio < fim){
             int posicaoPivo = particiona(vetor, inicio, fim);
 
-            quickSort(vetor, inicio, posicaoPivo - 1);
-            quickSort(vetor, posicaoPivo + 1, fim);
+            ordenar(vetor, inicio, posicaoPivo - 1);
+            ordenar(vetor, posicaoPivo + 1, fim);
         }
     }
 

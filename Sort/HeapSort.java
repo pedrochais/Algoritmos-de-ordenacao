@@ -5,7 +5,7 @@ import java.lang.Math;
 
 public class HeapSort {
 
-    public static void heapSort(Generic<?,?>[] vetor, int n){
+    public static void ordenar(Generic<?,?>[] vetor, int n){
         buildMaxHeap(vetor, n - 1);
         for(int i = n - 1; i >= 1; i--){
             Generic<?,?> temp = vetor[0];

@@ -2,7 +2,7 @@ package Sort;
 
 import Generic.Generic;
 
-public class MergeSort {
+public class MergeSortOtimizado {
     public static Generic<?,?>[] ordenar(Generic<?,?>[] vetor){
         Generic<?,?>[] Temp = new Generic<?,?>[vetor.length];
 
@@ -13,10 +13,14 @@ public class MergeSort {
         int meio;
 
         if(esq < dir){
-            meio = (esq + dir)/2;
-            MergeMain(vetor, T, esq, meio);
-            MergeMain(vetor, T, meio + 1, dir);
-            Merge(vetor, T, esq, meio + 1, dir);
+            if(vetor.length <= 15){
+                InsertionSort.ordenar(vetor, vetor.length);
+            }else{
+                meio = (esq + dir)/2;
+                MergeMain(vetor, T, esq, meio);
+                MergeMain(vetor, T, meio + 1, dir);
+                Merge(vetor, T, esq, meio + 1, dir);
+            }
         }
 
         return vetor;
