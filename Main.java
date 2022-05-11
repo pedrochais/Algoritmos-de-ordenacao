@@ -1,12 +1,22 @@
 import Generic.Generic;
 import Sort.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 
 public class Main {
     public static void main(String[] args) {
         Random random = new Random();
+
+        InsertionSort is = new InsertionSort();
+        SelectionSort ss = new SelectionSort();
+        SelectionSortOtimizado sso = new SelectionSortOtimizado();
+        QuickSort qs = new QuickSort();
+        HeapSort hs = new HeapSort();
+        MergeSort ms = new MergeSort();
+        MergeSortOtimizado mso = new MergeSortOtimizado();
 
         Generic<String, Integer>[] vetor = new Generic[20];
 
@@ -16,47 +26,49 @@ public class Main {
             System.out.println("Chave: "+vetor[i].getChave()+" / Valor: "+vetor[i].getValor());
         }
 
+        //Nome dos métodos de ordenação
+        List<String> nomeMetodos = new ArrayList<>();
+        nomeMetodos.add("InsertionSort");
+        //nomeMetodos.add("SelectionSort");
+        //nomeMetodos.add("MergeSort");
+        //nomeMetodos.add("QuickSort");
+        //nomeMetodos.add("HeapSort");
+        //nomeMetodos.add("SelectionSortOtimizado");
+        //nomeMetodos.add("MergeSortOtimizado");
+        //nomeMetodos.add();
 
-//        InsertionSort.ordenar(vetor, vetor.length);
-//        System.out.println("Vetor ordenado: ");
-//        for(int i=0; i < vetor.length; i++){
-//            System.out.println("Chave: " + vetor[i].getChave() + " Valor: " + vetor[i].getValor());
-//        }
+        int tipoOrdenacao = 2;
 
-//        SelectionSort.ordenar(vetor);
-//        System.out.println("Vetor ordenado: ");
-//        for(int i=0; i < vetor.length; i++){
-//            System.out.println("Chave: " + vetor[i].getChave() + " Valor: " + vetor[i].getValor());
-//        }
-
-//        QuickSort.ordenar(vetor, 0, 19);
-//        System.out.println("Vetor ordenado: ");
-//        for(int i=0; i < vetor.length; i++){
-//            System.out.println("Chave: " + vetor[i].getChave() + " Valor: " + vetor[i].getValor());
-//        }
-
-//        MergeSort.ordenar(vetor);
-//        System.out.println("Vetor ordenado: ");
-//        for(int i=0; i < vetor.length; i++){
-//            System.out.println("Chave: " + vetor[i].getChave() + " Valor: " + vetor[i].getValor());
-//        }
-
-        MergeSortOtimizado.ordenar(vetor);
-        System.out.println("Vetor ordenado: ");
+        for(String metodo : nomeMetodos){
+            switch (metodo){
+                case "InsertionSort":
+                    is.ordenar(vetor, vetor.length, tipoOrdenacao);
+                    break;
+                case "SelectionSort":
+                    ss.ordenar(vetor, tipoOrdenacao);
+                    break;
+                case "MergeSort":
+                    ms.ordenar(vetor, tipoOrdenacao);
+                    break;
+                case "QuickSort":
+                    qs.ordenar(vetor, 0, 19, tipoOrdenacao);
+                    break;
+                case "HeapSort":
+                    hs.ordenar(vetor, vetor.length, tipoOrdenacao);
+                    break;
+                case "SelectionSortOtimizado":
+                    sso.ordenar(vetor, tipoOrdenacao);
+                    break;
+                case "MergeSortOtimizado":
+                    mso.ordenar(vetor, tipoOrdenacao);
+                    break;
+                default:
+                    break;
+            }
+        }
+        System.out.println("Vetor ordenado pelo metodo " + nomeMetodos.get(0) + ":");
         for(int i=0; i < vetor.length; i++){
             System.out.println("Chave: " + vetor[i].getChave() + " Valor: " + vetor[i].getValor());
         }
-
-//        HeapSort.ordenar(vetor, vetor.length);
-//        System.out.println("Vetor ordenado: ");
-//        for(int i=0; i < vetor.length; i++){
-//            System.out.println("Chave: " + vetor[i].getChave() + " Valor: " + vetor[i].getValor());
-//        }
-
-//        SelectionSortOtimizado.ordenar(vetor);
-//        System.out.println("Vetor ordenado: ");
-//        for(int i=0; i < vetor.length; i++){
-//            System.out.println("Chave: " + vetor[i].getChave() + " Valor: " + vetor[i].getValor());
-//        }
     }
 }

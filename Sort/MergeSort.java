@@ -3,13 +3,16 @@ package Sort;
 import Generic.Generic;
 
 public class MergeSort {
-    public static Generic<?,?>[] ordenar(Generic<?,?>[] vetor){
+    private int tipoOrdenacao;
+
+    public Generic<?,?>[] ordenar(Generic<?, ?>[] vetor, int tipoOrdenacao){
+        this.tipoOrdenacao = tipoOrdenacao;
         Generic<?,?>[] Temp = new Generic<?,?>[vetor.length];
 
         return MergeMain(vetor, Temp, 0, vetor.length-1);
     }
 
-    public static Generic<?,?>[] MergeMain(Generic<?,?>[] vetor, Generic<?,?>[] T, int esq, int dir){
+    public Generic<?,?>[] MergeMain(Generic<?,?>[] vetor, Generic<?,?>[] T, int esq, int dir){
         int meio;
 
         if(esq < dir){
@@ -22,17 +25,26 @@ public class MergeSort {
         return vetor;
     }
 
-    public static void Merge(Generic<?,?>[] vetor, Generic<?,?>[] T, int esqPos, int dirPos, int dirFim){
+    public void Merge(Generic<?,?>[] vetor, Generic<?,?>[] T, int esqPos, int dirPos, int dirFim){
         int esqFim = dirPos - 1;
         int tempPos = esqPos;
         int numElem = dirFim - esqPos + 1;
 
         while(esqPos <= esqFim && dirPos <= dirFim){
-            if(vetor[esqPos].comparator(vetor[dirPos]) <= 0){ //vetor[esqPos] <= vetor[dirPos]
-                T[tempPos++] = vetor[esqPos++];
+            if(this.tipoOrdenacao == 1){
+                if(vetor[esqPos].comparator(vetor[dirPos]) <= 0){
+                    T[tempPos++] = vetor[esqPos++];
+                }else{
+                    T[tempPos++] = vetor[dirPos++];
+                }
             }else{
-                T[tempPos++] = vetor[dirPos++];
+                if(vetor[esqPos].comparator(vetor[dirPos]) >= 0){
+                    T[tempPos++] = vetor[esqPos++];
+                }else{
+                    T[tempPos++] = vetor[dirPos++];
+                }
             }
+
         }
 
         while(esqPos <= esqFim) T[tempPos++] = vetor[esqPos++];
