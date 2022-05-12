@@ -2,12 +2,16 @@ package Sort;
 
 import Generic.Generic;
 
-public class MergeSort {
+public class MergeSort implements Operacoes{
     private int tipoOrdenacao;
+    private int atr = 0;
+    private int co = 0;
 
     public Generic<?,?>[] ordenar(Generic<?, ?>[] vetor, int tipoOrdenacao){
         this.tipoOrdenacao = tipoOrdenacao;
         Generic<?,?>[] Temp = new Generic<?,?>[vetor.length];
+
+        this.atr++;
 
         return MergeMain(vetor, Temp, 0, vetor.length-1);
     }
@@ -16,6 +20,9 @@ public class MergeSort {
         int meio;
 
         if(esq < dir){
+            this.co++;
+            this.atr++;
+
             meio = (esq + dir)/2;
             MergeMain(vetor, T, esq, meio);
             MergeMain(vetor, T, meio + 1, dir);
@@ -31,27 +38,67 @@ public class MergeSort {
         int numElem = dirFim - esqPos + 1;
 
         while(esqPos <= esqFim && dirPos <= dirFim){
+            this.co += 2;
             if(this.tipoOrdenacao == 1){
                 if(vetor[esqPos].comparator(vetor[dirPos]) <= 0){
                     T[tempPos++] = vetor[esqPos++];
+
+                    this.co++;
+                    this.atr++;
                 }else{
                     T[tempPos++] = vetor[dirPos++];
+
+                    this.atr++;
                 }
             }else{
                 if(vetor[esqPos].comparator(vetor[dirPos]) >= 0){
                     T[tempPos++] = vetor[esqPos++];
+
+                    this.co++;
+                    this.atr++;
                 }else{
                     T[tempPos++] = vetor[dirPos++];
+
+                    this.atr++;
                 }
             }
-
         }
 
-        while(esqPos <= esqFim) T[tempPos++] = vetor[esqPos++];
-        while(dirPos <= dirFim) T[tempPos++] = vetor[dirPos++];
+        while(esqPos <= esqFim) {
+            T[tempPos++] = vetor[esqPos++];
+
+            this.co++;
+            this.atr++;
+        }
+        while(dirPos <= dirFim) {
+            T[tempPos++] = vetor[dirPos++];
+
+            this.co++;
+            this.atr++;
+        }
 
         for(int i = 0; i < numElem; i++, dirFim--){
             vetor[dirFim] = T[dirFim];
+
+            this.co++;
+            this.atr += 3;
         }
+
+        this.atr += 3;
+    }
+
+    @Override
+    public int getAtr() {
+        return this.atr;
+    }
+
+    @Override
+    public int getComp() {
+        return this.co;
+    }
+
+    public void reiniciar(){
+        this.atr = 0;
+        this.co = 0;
     }
 }

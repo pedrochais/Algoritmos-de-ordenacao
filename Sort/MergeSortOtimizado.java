@@ -2,12 +2,16 @@ package Sort;
 
 import Generic.Generic;
 
-public class MergeSortOtimizado {
+public class MergeSortOtimizado implements Operacoes{
     private int tipoOrdenacao;
+    private int atr = 0;
+    private int co = 0;
 
     public Generic<?,?>[] ordenar(Generic<?,?>[] vetor, int tipoOrdenacao){
         this.tipoOrdenacao = tipoOrdenacao;
         Generic<?,?>[] Temp = new Generic<?,?>[vetor.length];
+
+        this.atr++;
 
         return MergeMain(vetor, Temp, 0, vetor.length-1);
     }
@@ -16,10 +20,14 @@ public class MergeSortOtimizado {
         int meio;
 
         if(esq < dir){
-            if(vetor.length <= 15){
-                InsertionSort insertionSort = new InsertionSort();
-                insertionSort.ordenar(vetor, vetor.length, this.tipoOrdenacao);
+            this.co++;
+            if(dir - esq <= 15){
+                this.co++;
+
+                insertionSort(vetor, esq, dir+1);
+
             }else{
+                this.atr++;
                 meio = (esq + dir)/2;
                 MergeMain(vetor, T, esq, meio);
                 MergeMain(vetor, T, meio + 1, dir);
@@ -36,27 +44,108 @@ public class MergeSortOtimizado {
         int numElem = dirFim - esqPos + 1;
 
         while(esqPos <= esqFim && dirPos <= dirFim){
+            this.co += 2;
             if(this.tipoOrdenacao == 1){
                 if(vetor[esqPos].comparator(vetor[dirPos]) <= 0){
                     T[tempPos++] = vetor[esqPos++];
+
+                    this.co++;
+                    this.atr++;
                 }else{
                     T[tempPos++] = vetor[dirPos++];
+
+                    this.atr++;
                 }
             }else{
                 if(vetor[esqPos].comparator(vetor[dirPos]) >= 0){
                     T[tempPos++] = vetor[esqPos++];
+
+                    this.co++;
+                    this.atr++;
                 }else{
                     T[tempPos++] = vetor[dirPos++];
+
+                    this.atr++;
                 }
             }
 
         }
 
-        while(esqPos <= esqFim) T[tempPos++] = vetor[esqPos++];
-        while(dirPos <= dirFim) T[tempPos++] = vetor[dirPos++];
+        while(esqPos <= esqFim) {
+            T[tempPos++] = vetor[esqPos++];
+
+            this.co++;
+            this.atr++;
+        }
+        while(dirPos <= dirFim) {
+            T[tempPos++] = vetor[dirPos++];
+
+            this.co++;
+            this.atr++;
+        }
 
         for(int i = 0; i < numElem; i++, dirFim--){
             vetor[dirFim] = T[dirFim];
+
+            this.co++;
+            this.atr += 3;
         }
+
+        this.atr += 3;
+    }
+
+    //InsertionSort modificado
+    public void insertionSort(Generic<?,?> []vetor, int esq, int dir) {
+        int i, j;
+        Generic<?,?> key;
+
+        if(this.tipoOrdenacao == 1){
+            for(j = esq; j < dir; j++){
+                key = vetor[j];
+                i = j - 1;
+                while(i >= esq && vetor[i].comparator(key) > 0){ //Ordenação em ordem crescente
+                    vetor[i+1] = vetor[i];
+                    i--;
+
+                    this.co += 2;
+                    this.atr += 2;
+                }
+                vetor[i+1] = key;
+
+                this.co++;
+                this.atr += 5;
+            }
+        }else{
+            for(j = esq; j < dir; j++){
+                key = vetor[j];
+                i = j - 1;
+                while(i >= esq && vetor[i].comparator(key) < 0){ //Ordenação em ordem decrescente
+                    vetor[i+1] = vetor[i];
+                    i--;
+
+                    this.co += 2;
+                    this.atr += 2;
+                }
+                vetor[i+1] = key;
+
+                this.co++;
+                this.atr += 5;
+            }
+        }
+    }
+
+    @Override
+    public int getAtr() {
+        return this.atr;
+    }
+
+    @Override
+    public int getComp() {
+        return this.co;
+    }
+
+    public void reiniciar(){
+        this.atr = 0;
+        this.co = 0;
     }
 }
