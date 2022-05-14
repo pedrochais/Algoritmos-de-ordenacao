@@ -3,13 +3,14 @@ package Sort;
 import Generic.Generic;
 import java.lang.Math;
 
-public class HeapSort implements Operacoes{
+public class HeapSort extends Algoritmo implements Operacoes{
     private int tipoOrdenacao;
-    private int atr = 0;
-    private int co = 0;
+    private long atr = 0;
+    private long co = 0;
 
-    public void ordenar(Generic<?,?>[] vetor, int n, int tipoOrdenacao){
+    public Generic<?, ?>[] ordenar(Generic<?, ?>[] vetor, int tipoOrdenacao){
         this.tipoOrdenacao = tipoOrdenacao;
+        int n = vetor.length;
 
         buildHeap(vetor, n - 1);
 
@@ -26,6 +27,8 @@ public class HeapSort implements Operacoes{
                 MinHeapify(vetor, 0, i - 1);
             }
         }
+
+        return vetor;
     }
 
     private void buildHeap(Generic<?,?>[] vetor, int n){
@@ -112,12 +115,12 @@ public class HeapSort implements Operacoes{
     }
 
     @Override
-    public int getAtr() {
+    public long getAtr() {
         return this.atr;
     }
 
     @Override
-    public int getComp() {
+    public long getComp() {
         return this.co;
     }
 

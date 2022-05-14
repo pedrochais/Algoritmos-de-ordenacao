@@ -2,12 +2,12 @@ package Sort;
 
 import Generic.Generic;
 
-public class MergeSortOtimizado implements Operacoes{
+public class MergeSortOtimizado extends Algoritmo implements Operacoes{
     private int tipoOrdenacao;
-    private int atr = 0;
-    private int co = 0;
+    private long atr = 0;
+    private long co = 0;
 
-    public Generic<?,?>[] ordenar(Generic<?,?>[] vetor, int tipoOrdenacao){
+    public Generic<?,?>[] ordenar(Generic<?, ?>[] vetor, int tipoOrdenacao){
         this.tipoOrdenacao = tipoOrdenacao;
         Generic<?,?>[] Temp = new Generic<?,?>[vetor.length];
 
@@ -135,12 +135,12 @@ public class MergeSortOtimizado implements Operacoes{
     }
 
     @Override
-    public int getAtr() {
+    public long getAtr() {
         return this.atr;
     }
 
     @Override
-    public int getComp() {
+    public long getComp() {
         return this.co;
     }
 

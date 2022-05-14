@@ -2,14 +2,15 @@ package Sort;
 
 import Generic.Generic;
 
-public class InsertionSort implements Operacoes{
+public class InsertionSort extends Algoritmo implements Operacoes{
     private int tipoOrdenacao;
-    private int atr = 0;
-    private int co = 0;
+    private long atr = 0;
+    private long co = 0;
 
-    public void ordenar(Generic<?,?> []vetor, int tamanho, int tipoOrdenacao) {
+    public Generic<?, ?>[] ordenar(Generic<?, ?> []vetor, int tipoOrdenacao) {
         this.tipoOrdenacao = tipoOrdenacao;
         int i, j;
+        int tamanho = vetor.length;
         Generic<?,?> key;
 
         if(this.tipoOrdenacao == 1){
@@ -45,15 +46,17 @@ public class InsertionSort implements Operacoes{
                 this.atr += 5;
             }
         }
+
+        return vetor;
     }
 
     @Override
-    public int getAtr() {
+    public long getAtr() {
         return this.atr;
     }
 
     @Override
-    public int getComp() {
+    public long getComp() {
         return this.co;
     }
 

@@ -1,6 +1,7 @@
 package Sort;
 
 public interface Operacoes {
-    public int getAtr();
-    public int getComp();
+    public long getAtr();
+    public long getComp();
+    public void reiniciar();
 }

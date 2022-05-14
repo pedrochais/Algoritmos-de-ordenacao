@@ -2,22 +2,29 @@ package Sort;
 
 import Generic.Generic;
 
-public class QuickSort implements Operacoes{
+public class QuickSort extends Algoritmo implements Operacoes{
     private int tipoOrdenacao;
-    private int atr = 0;
-    private int co = 0;
+    private long atr = 0;
+    private long co = 0;
 
-    public void ordenar(Generic<?,?>[] vetor, int inicio, int fim, int tipoOrdenacao){
+    public Generic<?, ?>[] ordenar(Generic<?,?>[] vetor, int tipoOrdenacao){
+        return quickSort(vetor, 0, vetor.length - 1, tipoOrdenacao);
+    }
+
+    public Generic<?, ?>[] quickSort(Generic<?,?>[] vetor, int inicio, int fim, int tipoOrdenacao){
         this.tipoOrdenacao = tipoOrdenacao;
+
         if(inicio < fim){
             int posicaoPivo = particiona(vetor, inicio, fim);
 
-            ordenar(vetor, inicio, posicaoPivo - 1, tipoOrdenacao);
-            ordenar(vetor, posicaoPivo + 1, fim, tipoOrdenacao);
+            quickSort(vetor, inicio, posicaoPivo - 1, tipoOrdenacao);
+            quickSort(vetor, posicaoPivo + 1, fim, tipoOrdenacao);
 
             this.co++;
             this.atr++;
         }
+
+        return vetor;
     }
 
     private int particiona(Generic<?,?>[] vetor, int inicio, int fim){
@@ -77,15 +84,16 @@ public class QuickSort implements Operacoes{
     }
 
     @Override
-    public int getAtr() {
+    public long getAtr() {
         return this.atr;
     }
 
     @Override
-    public int getComp() {
+    public long getComp() {
         return this.co;
     }
 
+    @Override
     public void reiniciar(){
         this.atr = 0;
         this.co = 0;

@@ -1,5 +1,6 @@
 import Generic.*;
 import Sort.*;
+import jdk.swing.interop.SwingInterOpUtils;
 
 import java.lang.reflect.Array;
 import java.util.*;
@@ -46,6 +47,7 @@ public class Main {
                 7. MergeSort Otimizado
                 8. JDKMergeSort
                 9. JDKQuickSort
+                10. Executar tudo
                 0. Finalizar programa
                 
                 Digite a opção: """);
@@ -109,6 +111,39 @@ public class Main {
         }
     }
 
+    public static double calcularTempoMedio(Generic<?,?>[] vetor, Generic<?,?>[] vetorCp, Algoritmo algoritmo, int repeticoes, int tipoOrdenacao){
+        long tempoInicial = 0;
+        long tempoFinal = 0;
+        double somatorioTempo = 0;
+        double tempoMedio = 0;
+
+        for (int i = 0; i < repeticoes; i++){
+            algoritmo.reiniciar();
+
+            tempoInicial = System.currentTimeMillis();
+            algoritmo.ordenar(vetor, tipoOrdenacao);
+            tempoFinal = System.currentTimeMillis();
+
+            somatorioTempo += (tempoFinal - tempoInicial);
+
+            copiarVetor(vetorCp, vetor);
+        }
+
+        tempoMedio = somatorioTempo/repeticoes;
+        return tempoMedio;
+    }
+
+    public static void imprimirDados(String dado, String alg, String ordem, int n, int exp, double tempoMedio, long atribuicoes, long comparacoes){
+        System.out.println("Tipo: Dado "+dado);
+        System.out.println("Algoritmo de ordenação: "+alg+" | Ordem: "+ordem);
+        System.out.println("Tamanho do vetor: "+n+" | Quantidade de experimentos: "+exp);
+        //Printa o tempo de de execução do algoritmo de ordenação
+        System.out.println("Tempo de médio de execução: "+tempoMedio+" ms");
+        //Printa a quantidade de atribuições e comparações
+        System.out.println("Atribuições: "+atribuicoes+" / Comparações: "+comparacoes);
+        System.out.println("");
+    }
+
     public static void main(String[] args) {
         ComparaGeneric cv = new ComparaGeneric();
         List<Generic> aux = new ArrayList<>();
@@ -122,8 +157,16 @@ public class Main {
         MergeSort ms = new MergeSort();
         MergeSortOtimizado mso = new MergeSortOtimizado();
 
+        //Algoritmo selecionado
+        String alg = "";
+        String ordem = "";
+        String dado = "";
+
         //Quantidade de elementos
-        int n = 10;
+        int n = 1000;
+
+        //Quantidade de experimentos
+        int exp = 100;
 
         int opcaoDado = menuDados();
 
@@ -144,6 +187,8 @@ public class Main {
             gerarVetorDadoC(vetor, n);
         }
 
+        copiarVetor(vetor, vetorCp);
+
         //Menu de navegação
         String opcao;
         while(true){
@@ -151,87 +196,138 @@ public class Main {
             if(opcao.equals("0")) break; //Sair do programa
 
             int tipoOrdenacao = 0;
+            long atribuicoes = 0;
+            long comparacoes = 0;
+            double tempoMedio = 0;
+
             long tempoInicial = 0;
-            int atribuicoes = 0;
-            int comparacoes = 0;
+            long tempoFinal = 0;
+            double somatorioTempo = 0;
+
+
             switch (opcao) {
                 case "1": //InsertionSort
+                    alg = "InsertionSort";
                     tipoOrdenacao = submenu();
-                    tempoInicial = System.currentTimeMillis();
-                    is.ordenar(vetor, vetor.length, tipoOrdenacao);
+
+                    tempoMedio = calcularTempoMedio(vetor, vetorCp, is, exp, tipoOrdenacao);
 
                     atribuicoes = is.getAtr();
                     comparacoes = is.getComp();
                     break;
+
                 case "2": //SelectionSort
+                    alg = "SelectionSort";
                     tipoOrdenacao = submenu();
-                    tempoInicial = System.currentTimeMillis();
-                    ss.ordenar(vetor, tipoOrdenacao);
+
+                    tempoMedio = calcularTempoMedio(vetor, vetorCp, ss, exp, tipoOrdenacao);
 
                     atribuicoes = ss.getAtr();
                     comparacoes = ss.getComp();
                     break;
+
                 case "3": //MergeSort
+                    alg = "MergeSort";
                     tipoOrdenacao = submenu();
-                    tempoInicial = System.currentTimeMillis();
-                    ms.ordenar(vetor, tipoOrdenacao);
+
+                    tempoMedio = calcularTempoMedio(vetor, vetorCp, ms, exp, tipoOrdenacao);
 
                     atribuicoes = ms.getAtr();
                     comparacoes = ms.getComp();
                     break;
+
                 case "4": //QuickSort
+                    alg = "QuickSort";
                     tipoOrdenacao = submenu();
-                    tempoInicial = System.currentTimeMillis();
-                    qs.ordenar(vetor, 0, vetor.length-1, tipoOrdenacao);
+
+                    tempoMedio = calcularTempoMedio(vetor, vetorCp, qs, exp, tipoOrdenacao);
 
                     atribuicoes = qs.getAtr();
                     comparacoes = qs.getComp();
                     break;
+
                 case "5": //HeapSort
+                    alg = "HeapSort";
                     tipoOrdenacao = submenu();
-                    tempoInicial = System.currentTimeMillis();
-                    hs.ordenar(vetor, vetor.length, tipoOrdenacao);
+
+                    tempoMedio = calcularTempoMedio(vetor, vetorCp, hs, exp, tipoOrdenacao);
 
                     atribuicoes = hs.getAtr();
                     comparacoes = hs.getComp();
                     break;
+
                 case "6": //SelectionSort Otimizado
+                    alg = "SelectionSort Otimizado";
                     tipoOrdenacao = submenu();
-                    tempoInicial = System.currentTimeMillis();
-                    sso.ordenar(vetor, tipoOrdenacao);
+
+                    tempoMedio = calcularTempoMedio(vetor, vetorCp, sso, exp, tipoOrdenacao);
 
                     atribuicoes = sso.getAtr();
                     comparacoes = sso.getComp();
                     break;
+
                 case "7": //MergeSort Otimizado
+                    alg = "MergeSort Otimizado";
                     tipoOrdenacao = submenu();
-                    tempoInicial = System.currentTimeMillis();
-                    mso.ordenar(vetor, tipoOrdenacao);
+
+                    tempoMedio = calcularTempoMedio(vetor, vetorCp, mso, exp, tipoOrdenacao);
 
                     atribuicoes = mso.getAtr();
                     comparacoes = mso.getComp();
                     break;
+
                 case "8": //JDKMergeSort
-                    aux = Arrays.asList(vetor);
-                    tempoInicial = System.currentTimeMillis();
-                    Collections.sort(aux);
+                    alg = "JDKMergeSort";
+                    for (int i = 0; i < exp; i++){
+                        aux = Arrays.asList(vetor);
+                        tempoInicial = System.currentTimeMillis();
+                        Collections.sort(aux);
+                        tempoFinal = System.currentTimeMillis();
+
+                        somatorioTempo += (tempoFinal - tempoInicial);
+
+                        copiarVetor(vetorCp, vetor);
+                    }
+
+                    tempoMedio = somatorioTempo/exp;
 
                     break;
+
                 case "9": //JDKQuickSort
-                    tempoInicial = System.currentTimeMillis();
-                    Arrays.sort(vetor, cv);
+                    alg = "JDKQuickSort";
+                    for (int i = 0; i < exp; i++){
+                        tempoInicial = System.currentTimeMillis();
+                        Arrays.sort(vetor, cv);
+                        tempoFinal = System.currentTimeMillis();
+
+                        somatorioTempo += (tempoFinal - tempoInicial);
+
+                        copiarVetor(vetorCp, vetor);
+                    }
+
+                    tempoMedio = somatorioTempo/exp;
+
                     break;
+
                 default:
                     System.out.println("Opção inválida!");
                     break;
             }
-            //Printa a quantidade de atribuições e comparações
-            System.out.println("Atribuições: "+atribuicoes+" / Comparações: "+comparacoes);
-            ss.reiniciar();
-            sso.reiniciar();
 
-            //Printa o tempo de de execução do algoritmo de ordenação
-            System.out.println("Tempo de execução: "+(System.currentTimeMillis() - tempoInicial));
+            if(tipoOrdenacao == 1) ordem = "Crescente";
+            else if(tipoOrdenacao == 2) ordem = "Decrescente";
+
+            if(opcaoDado == 1) dado = "A (String, Double)";
+            else if(opcaoDado == 2) dado = "B (Double, String)";
+            else if(opcaoDado == 3) dado = "C (Double, Integer)";
+
+            //Print dos dados
+            System.out.println("Tipo: Dado "+dado);
+            System.out.println("Algoritmo de ordenação: "+alg+" | Ordem: "+ordem);
+            System.out.println("Tamanho do vetor: "+n+" | Quantidade de experimentos: "+exp);
+            System.out.println("Tempo de médio de execução: "+tempoMedio+" ms");
+            System.out.println("Atribuições: "+atribuicoes+" / Comparações: "+comparacoes);
+            copiarVetor(vetorCp, vetor);
         }
     }
 }
