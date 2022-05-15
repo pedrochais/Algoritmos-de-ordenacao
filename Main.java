@@ -1,20 +1,10 @@
 import Generic.*;
 import Sort.*;
-import jdk.swing.interop.SwingInterOpUtils;
-
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class Main {
     static Scanner input = new Scanner(System.in);
     static Random random = new Random();
-
-    //Função que printa vetor.
-    public static void printVetor(Generic<?,?>[] vetor){
-        for (int i = 0; i < vetor.length; i++) {
-            System.out.println("Chave: " + vetor[i].getChave() + " / Valor: " + vetor[i].getValor());
-        }
-    }
 
     //Função que realiza a cópia do vetor1 para o vetor2.
     public static void copiarVetor(Generic<?,?>[] vetor1, Generic<?,?>[] vetor2){
@@ -54,7 +44,7 @@ public class Main {
         double somatorioTempo = 0;
         double tempoMedio = 0;
 
-        //O algoritmo irá ser executado n vezes, após isso será calculado o tempo médio.
+        //O algoritmo será executado n vezes, após isso será calculado o tempo médio.
         for (int i = 0; i < repeticoes; i++){
             //Reinicia a quantidade de atribuições e comparações para a realização do novo teste.
             algoritmo.reiniciar();
@@ -90,37 +80,45 @@ public class Main {
         //Instância de lista auxiliar
         List<Generic> aux = new ArrayList<>();
         //Instancia das classes dos algoritmos de ordenação
-        InsertionSort is = new InsertionSort();
         SelectionSort ss = new SelectionSort();
         SelectionSortOtimizado sso = new SelectionSortOtimizado();
         QuickSort qs = new QuickSort();
         HeapSort hs = new HeapSort();
         MergeSort ms = new MergeSort();
         MergeSortOtimizado mso = new MergeSortOtimizado();
-        //Guarda escolha do algoritmo, da ordem e do tipo de dado.
-        String alg = "";
-        String ordem = "";
-        String dado = "";
         //Quantidade de elementos
-        int n = 1000000;
+        int n = 1000;
+        //Quantidade de experimentos
+        int exp = 100;
         //Instância do vetor original e do vetor cópia
         Generic<?, ?>[] vetor = new Generic[n];
         Generic<?, ?>[] vetorCp = new Generic[n];
-        //Quantidade de experimentos
-        int exp = 1;
         //Inicialização das variáveis
-        int tipoOrdenacao = 0;
         long atribuicoes = 0;
         long comparacoes = 0;
         double tempoMedio = 0;
         long tempoInicial = 0;
         long tempoFinal = 0;
         double somatorioTempo = 0;
+        //Guarda escolha do algoritmo, da ordem e do tipo de dado.
+        String alg = "";
+        String ordem = "";
+        String dado = "";
 
         // Execução automática de todos os testes.
-        for (int opc = 0; opc < 1; opc++){
+        String opcao = "";
+        while(!opcao.equals("0")){
+            System.out.println("""
+                    Escolha um tipo de dado
+                    1. Dado A (String, Double)
+                    2. Dado B (Double, String)
+                    3. Dado C (Double, Integer)
+                    0. Encerrar programa
+                    """);
+            opcao = input.nextLine();
+
             //Gerar vetores para os diferentes tipos de dados a cada iteração.
-            if(opc == 0){
+            if(opcao.equals("1")){
                 System.out.println("""
 
                         ====================================================================
@@ -131,7 +129,7 @@ public class Main {
                 vetor = (Generic<String, Double>[])vetor;
                 vetorCp = (Generic<String, Double>[])vetorCp;
                 gerarVetorDadoA(vetor, n);
-            }else if(opc == 1){
+            }else if(opcao.equals("2")){
                 System.out.println("""
 
                         ====================================================================
@@ -142,7 +140,7 @@ public class Main {
                 vetor = (Generic<Double, String>[])vetor;
                 vetorCp = (Generic<Double, String>[])vetorCp;
                 gerarVetorDadoB(vetor, n);
-            }else if(opc == 2){
+            }else if(opcao.equals("3")){
                 System.out.println("""
                         
                         =====================================================================
@@ -153,6 +151,12 @@ public class Main {
                 vetor = (Generic<Double, Integer>[])vetor;
                 vetorCp = (Generic<Double, Integer>[])vetorCp;
                 gerarVetorDadoC(vetor, n);
+            }else if(opcao.equals("0")){
+                System.out.println("Programa encerrado.");
+                continue;
+            }else{
+                System.out.println("Digite uma opção válida.");
+                continue;
             }
             copiarVetor(vetor, vetorCp);
 
@@ -266,15 +270,12 @@ public class Main {
             imprimirDados(dado, alg, "Crescente", n, exp, tempoMedio, atribuicoes, comparacoes);
             copiarVetor(vetorCp, vetor);
 
-
-            /*
             alg = "SelectionSort Otimizado";
             tempoMedio = calcularTempoMedio(vetor, vetorCp, sso, exp, 2);
             atribuicoes = sso.getAtr();
             comparacoes = sso.getComp();
             imprimirDados(dado, alg, "Decrescente", n, exp, tempoMedio, atribuicoes, comparacoes);
             copiarVetor(vetorCp, vetor);
-            */
 
             /* SELECTION SORT */
 
@@ -285,18 +286,16 @@ public class Main {
             imprimirDados(dado, alg, "Crescente", n, exp, tempoMedio, atribuicoes, comparacoes);
             copiarVetor(vetorCp, vetor);
 
-            /*
             alg = "SelectionSort";
             tempoMedio = calcularTempoMedio(vetor, vetorCp, ss, exp, 2);
             atribuicoes = ss.getAtr();
             comparacoes = ss.getComp();
             imprimirDados(dado, alg, "Decrescente", n, exp, tempoMedio, atribuicoes, comparacoes);
             copiarVetor(vetorCp, vetor);
-            */
 
             System.out.println("[Iteração finalizada: Dado "+dado+"]");
-//            System.out.println("Pressione ENTER para continuar");
-//            input.nextLine();
+            System.out.println("Pressione ENTER para continuar");
+            input.nextLine();
         }
     }
 }
