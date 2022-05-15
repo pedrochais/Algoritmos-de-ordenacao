@@ -3,9 +3,9 @@ package Sort;
 import Generic.Generic;
 
 public class QuickSort extends Algoritmo implements Operacoes{
-    private int tipoOrdenacao;
-    private long atr = 0;
-    private long co = 0;
+    private int tipoOrdenacao; //Crescente ou decrescente
+    private long atr = 0; //Quantidade de atribuições
+    private long co = 0; //Quantidade de comparações
 
     public Generic<?, ?>[] ordenar(Generic<?,?>[] vetor, int tipoOrdenacao){
         return quickSort(vetor, 0, vetor.length - 1, tipoOrdenacao);
@@ -15,7 +15,7 @@ public class QuickSort extends Algoritmo implements Operacoes{
         this.tipoOrdenacao = tipoOrdenacao;
 
         if(inicio < fim){
-            int posicaoPivo = particiona(vetor, inicio, fim);
+            int posicaoPivo = particiona(vetor, inicio, fim); // Calcula posição do pivô e faz a ordenação
 
             quickSort(vetor, inicio, posicaoPivo - 1, tipoOrdenacao);
             quickSort(vetor, posicaoPivo + 1, fim, tipoOrdenacao);
@@ -33,18 +33,19 @@ public class QuickSort extends Algoritmo implements Operacoes{
 
         while(i <= f){
             this.co++;
-            if(this.tipoOrdenacao == 1){
-                if(vetor[i].comparator(pivo) <= 0){// vetor[i] <= pivo
+            if(this.tipoOrdenacao == 1){ //Condição para ordenação crescente
+                if(vetor[i].comparator(pivo) <= 0){ //Compara valor na posição i com o pivô
                     i++;
 
                     this.co++;
                     this.atr++;
-                }else if(pivo.comparator(vetor[f]) < 0){ //  pivo < vetor[f]
+                }else if(pivo.comparator(vetor[f]) < 0){ //Compara valor na posição f com o pivô
                     f--;
 
                     this.co++;
                     this.atr++;
                 }else{
+                    //Realiza a troca dos valores
                     Generic<?,?> troca = vetor[i];
                     vetor[i] = vetor[f];
                     vetor[f] = troca;
@@ -53,18 +54,19 @@ public class QuickSort extends Algoritmo implements Operacoes{
 
                     this.atr += 5;
                 }
-            }else{
-                if(vetor[i].comparator(pivo) >= 0){// vetor[i] <= pivo
+            }else{ //Condição para ordenação decrescente
+                if(vetor[i].comparator(pivo) >= 0){ //Compara valor na posição i com o pivô
                     i++;
 
                     this.co++;
                     this.atr++;
-                }else if(pivo.comparator(vetor[f]) > 0){ //  pivo < vetor[f]
+                }else if(pivo.comparator(vetor[f]) > 0){ //Compara valor na posição f com o pivô
                     f--;
 
                     this.co++;
                     this.atr++;
                 }else{
+                    //Realiza a troca dos valores
                     Generic<?,?> troca = vetor[i];
                     vetor[i] = vetor[f];
                     vetor[f] = troca;
@@ -93,6 +95,7 @@ public class QuickSort extends Algoritmo implements Operacoes{
         return this.co;
     }
 
+    //Reinicia a quantidade de atribuições e de comparações
     @Override
     public void reiniciar(){
         this.atr = 0;

@@ -3,9 +3,9 @@ package Sort;
 import Generic.Generic;
 
 public class MergeSort extends Algoritmo implements Operacoes{
-    private int tipoOrdenacao;
-    private long atr = 0;
-    private long co = 0;
+    private int tipoOrdenacao; //Crescente ou decrescente
+    private long atr = 0; //Quantidade de atribuições
+    private long co = 0; //Quantidade de comparações
 
     public Generic<?,?>[] ordenar(Generic<?, ?>[] vetor, int tipoOrdenacao){
         this.tipoOrdenacao = tipoOrdenacao;
@@ -23,10 +23,10 @@ public class MergeSort extends Algoritmo implements Operacoes{
             this.co++;
             this.atr++;
 
-            meio = (esq + dir)/2;
-            MergeMain(vetor, T, esq, meio);
-            MergeMain(vetor, T, meio + 1, dir);
-            Merge(vetor, T, esq, meio + 1, dir);
+            meio = (esq + dir)/2; //Calcula o meio para dividir o vetor
+            MergeMain(vetor, T, esq, meio); //Realiza a ordenação do vetor à esquerda
+            MergeMain(vetor, T, meio + 1, dir); //Realiza a ordenação do vetor à direita
+            Merge(vetor, T, esq, meio + 1, dir); //Junta os dois vetores
         }
 
         return vetor;
@@ -37,9 +37,10 @@ public class MergeSort extends Algoritmo implements Operacoes{
         int tempPos = esqPos;
         int numElem = dirFim - esqPos + 1;
 
+        //Realiza a ordenação passando os valores de forma ordenada para o vetor temporário
         while(esqPos <= esqFim && dirPos <= dirFim){
             this.co += 2;
-            if(this.tipoOrdenacao == 1){
+            if(this.tipoOrdenacao == 1){ //Condição para ordenação crescente
                 if(vetor[esqPos].comparator(vetor[dirPos]) <= 0){
                     T[tempPos++] = vetor[esqPos++];
 
@@ -50,7 +51,7 @@ public class MergeSort extends Algoritmo implements Operacoes{
 
                     this.atr++;
                 }
-            }else{
+            }else{ //Condição para ordenação decrescente
                 if(vetor[esqPos].comparator(vetor[dirPos]) >= 0){
                     T[tempPos++] = vetor[esqPos++];
 
@@ -64,12 +65,14 @@ public class MergeSort extends Algoritmo implements Operacoes{
             }
         }
 
+        //Termina de copiar o resto do vetor
         while(esqPos <= esqFim) {
             T[tempPos++] = vetor[esqPos++];
 
             this.co++;
             this.atr++;
         }
+        //Termina de copiar o resto do vetor
         while(dirPos <= dirFim) {
             T[tempPos++] = vetor[dirPos++];
 
@@ -77,6 +80,7 @@ public class MergeSort extends Algoritmo implements Operacoes{
             this.atr++;
         }
 
+        //Passa os valores do vetor temporário para o vetor principal
         for(int i = 0; i < numElem; i++, dirFim--){
             vetor[dirFim] = T[dirFim];
 
@@ -97,6 +101,7 @@ public class MergeSort extends Algoritmo implements Operacoes{
         return this.co;
     }
 
+    //Reinicia a quantidade de atribuições e de comparações
     public void reiniciar(){
         this.atr = 0;
         this.co = 0;

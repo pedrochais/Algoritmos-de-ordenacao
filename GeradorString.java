@@ -2,9 +2,8 @@ import java.util.*;
 import java.nio.charset.*;
 
 public class GeradorString {
-
-    public static String getRandomString(int i)
-    {
+    //Fonte: https://www.delftstack.com/pt/howto/java/random-alphanumeric-string-in-java/
+    public static String getRandomString(int i) {
         byte[] bytearray;
         String mystring;
         StringBuffer thebuffer;
@@ -12,8 +11,7 @@ public class GeradorString {
         bytearray = new byte[256];
         new Random().nextBytes(bytearray);
 
-        mystring
-                = new String(bytearray, Charset.forName("UTF-8"));
+        mystring = new String(bytearray, Charset.forName("UTF-8"));
 
         // Create the StringBuffer
         thebuffer = new StringBuffer();
@@ -22,10 +20,7 @@ public class GeradorString {
 
             char n = mystring.charAt(m);
 
-            if (((n >= 'A' && n <= 'Z')
-                    || (n >= '0' && n <= '9'))
-                    && (i > 0)) {
-
+            if (((n >= 'A' && n <= 'Z') || (n >= '0' && n <= '9')) && (i > 0)) {
                 thebuffer.append(n);
                 i--;
             }

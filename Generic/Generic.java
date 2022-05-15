@@ -6,23 +6,26 @@ public class Generic <K,V> implements Comparable<Generic>{
     private K chave;
     private V valor;
 
+    //Método construtor que inicializa a chave e o valor do elemento ao instanciar
     public Generic(K chave, V valor){
         this.chave = chave;
         this.valor = valor;
     }
 
+    //Retorna chave
     public K getChave() {
         return chave;
     }
 
+    //Retorna valor
     public V getValor() {
         return valor;
     }
 
-    //Metodo de comparacao da tipagem dos valores do vetor com a chave que está armazenando o valor temporariamente
+    //Metodo para fazer a comparação das estruturas Generics através de castings
     public int comparator(Generic<?,?> valorChave){
         if(this.valor instanceof Integer){
-            return((Integer) this.valor).compareTo((Integer) valorChave.getValor()); //0 se for igual; menor que 0 se A é menor que B
+            return((Integer) this.valor).compareTo((Integer) valorChave.getValor());
         }else if(this.valor instanceof String){
             return((String) this.valor).compareTo((String) valorChave.getValor());
         }else{
@@ -30,10 +33,11 @@ public class Generic <K,V> implements Comparable<Generic>{
         }
     }
 
+    //Metodo para fazer a comparação das estruturas Generics através de castings
     @Override
     public int compareTo(Generic o) {
         if(this.valor instanceof Integer){
-            return((Integer) this.valor).compareTo((Integer) o.getValor()); //0 se for igual; menor que 0 se A é menor que B
+            return((Integer) this.valor).compareTo((Integer) o.getValor());
         }else if(this.valor instanceof String){
             return((String) this.valor).compareTo((String) o.getValor());
         }else{
